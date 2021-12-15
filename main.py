@@ -5,6 +5,7 @@ import os.path
 from urllib.parse import urlparse
 import datetime
 import dotenv
+import random
 
 
 def get_file_ext(url):
@@ -50,7 +51,7 @@ def nasa_image(nasa_token):
             }
     )
     response.raise_for_status()
-    filename = "nasa/nasa{}{}"
+    filename = "images/nasa{}{}"
     for link in response.json():
         url = link.get("hdurl")
         if url is not None:
@@ -58,7 +59,7 @@ def nasa_image(nasa_token):
 
 
 def requst_epic(nasa_token):
-    filename = "epic/epic{}{}"
+    filename = "images/epic{}{}"
     response = requests.get(
         "https://api.nasa.gov/EPIC/api/natural/", params={"api_key": nasa_token}
     )
@@ -81,7 +82,8 @@ def bot_send_text(bot):
 
 
 def bot_send_photo(bot):
-    bot.send_photo(chat_id='@antonspacetest', photo=open('nasa/nasa10.jpg', 'rb'))
+    dir = 'images'
+    bot.send_photo(chat_id='@antonspacetest', photo=open(os.path.join(dir,  random.choice(os.listdir(dir))), "rb"))
 
 
 def main():
@@ -92,7 +94,7 @@ def main():
     # spasex()
     # nasa_image(nasa_token)
     # requst_epic(nasa_token)
-    print(bot.get_me())
+    # print(bot.get_me())
     bot_send_photo(bot)
 
 
