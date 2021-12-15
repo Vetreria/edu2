@@ -80,18 +80,20 @@ def bot_send_text(bot):
     bot.send_message(chat_id='@antonspacetest', text="I'm sorry Dave I'm afraid I can't do that.")
 
 
+def bot_send_photo(bot):
+    bot.send_photo(chat_id='@antonspacetest', photo=open('nasa/nasa10.jpg', 'rb'))
+
+
 def main():
     dotenv.load_dotenv()
     tg_token = os.getenv('TG_TOKEN')
-    # print(tg_token)
     bot = telegram.Bot(token = tg_token)
     nasa_token = os.getenv('NASA_TOKEN')
-    # print(nasa_token)
     # spasex()
     # nasa_image(nasa_token)
     # requst_epic(nasa_token)
     print(bot.get_me())
-    bot_send_text(bot)
+    bot_send_photo(bot)
 
 
 if __name__ == "__main__":
