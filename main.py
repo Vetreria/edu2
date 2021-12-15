@@ -1,3 +1,4 @@
+import telegram
 import requests
 from pathlib import Path
 import os.path
@@ -42,10 +43,10 @@ def spasex():
         save_image(url, filename)
 
 
-def nasa_image(token):
+def nasa_image(nasa_token):
     response = requests.get(
         f"https://api.nasa.gov/planetary/apod/", params={
-            "api_key": token, "count": 50
+            "api_key": nasa_token, "count": 50
             }
     )
     response.raise_for_status()
@@ -56,10 +57,10 @@ def nasa_image(token):
             save_image(url, filename)
 
 
-def requst_epic(token):
+def requst_epic(nasa_token):
     filename = "epic/epic{}{}"
     response = requests.get(
-        "https://api.nasa.gov/EPIC/api/natural/", params={"api_key": token}
+        "https://api.nasa.gov/EPIC/api/natural/", params={"api_key": nasa_token}
     )
     response.raise_for_status()
     for param in response.json():
@@ -75,12 +76,22 @@ def requst_epic(token):
             save_image(url, filename)
 
 
+def bot_send_text(bot):
+    bot.send_message(chat_id='@antonspacetest', text="I'm sorry Dave I'm afraid I can't do that.")
+
+
 def main():
     dotenv.load_dotenv()
-    token = os.getenv('NASA_TOKEN')
-    spasex()
-    nasa_image(token)
-    requst_epic(token)
+    tg_token = os.getenv('TG_TOKEN')
+    # print(tg_token)
+    bot = telegram.Bot(token = tg_token)
+    nasa_token = os.getenv('NASA_TOKEN')
+    # print(nasa_token)
+    # spasex()
+    # nasa_image(nasa_token)
+    # requst_epic(nasa_token)
+    print(bot.get_me())
+    bot_send_text(bot)
 
 
 if __name__ == "__main__":
