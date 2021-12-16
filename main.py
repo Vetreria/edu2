@@ -1,11 +1,21 @@
 import telegram
 import requests
 from pathlib import Path
+from os import listdir
 import os.path
 from urllib.parse import urlparse
 import datetime
 import dotenv
 import random
+import time
+import argparse
+from telegram.ext import defaults
+
+def set_time():
+    pause = argparse.ArgumentParser()
+    pause.add_argument('-t', '--time', type=int, default=86400)
+    return pause
+
 
 
 def get_file_ext(url):
@@ -68,8 +78,7 @@ def requst_epic(nasa_token):
         name = param.get("image")
         d_str = param.get("date")
         d_img = datetime.datetime.strptime(d_str, "%Y-%m-%d %H:%M:%S")
-        if name or d_image is not None:
-            # year = d_image.year
+        if name or d_img is not None:
             url = (
                 """https://epic.gsfc.nasa.gov/archive/natural/{}/{}/{}/png/{}.png"""
                 .format(d_img.year, d_img.month, d_img.day, name)
@@ -81,21 +90,33 @@ def bot_send_text(bot):
     bot.send_message(chat_id='@antonspacetest', text="I'm sorry Dave I'm afraid I can't do that.")
 
 
-def bot_send_photo(bot):
+def bot_send_random_photo(bot):
     dir = 'images'
     bot.send_photo(chat_id='@antonspacetest', photo=open(os.path.join(dir,  random.choice(os.listdir(dir))), "rb"))
 
 
+def bot_send_list_photo(bot, user_time):
+    for image in listdir('images'):
+        bot.send_photo(chat_id='@antonspacetest', photo=open('images/'+image, "rb"))
+        time.sleep(user_time)
+    print(listdir('images'))
+
+
+
 def main():
+    pause = set_time()
+    namespace = pause.parse_args()
+    user_time = namespace.time
     dotenv.load_dotenv()
     tg_token = os.getenv('TG_TOKEN')
     bot = telegram.Bot(token = tg_token)
     nasa_token = os.getenv('NASA_TOKEN')
-    # spasex()
-    # nasa_image(nasa_token)
-    # requst_epic(nasa_token)
-    # print(bot.get_me())
-    bot_send_photo(bot)
+    spasex()
+    nasa_image(nasa_token)
+    requst_epic(nasa_token)
+    print(bot.get_me())
+    # bot_send_random_photo(bot)
+    bot_send_list_photo(bot, user_time)
 
 
 if __name__ == "__main__":
