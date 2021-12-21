@@ -1,33 +1,11 @@
 import requests
-from pathlib import Path
-from os import listdir
-import os.path
-from urllib.parse import urlparse
 import datetime
 import dotenv
+from file_save import save_image
+import os.path
 
 
-def get_file_ext(url):
-    cut = urlparse(url)
-    return os.path.splitext(cut.path)[-1]
-
-
-def save_image(url, filename):
-    counter = 0
-    file_ext = get_file_ext(url)
-    while os.path.isfile(filename.format(counter, file_ext)):
-        counter += 1
-    file_ext = get_file_ext(url)
-    filename = filename.format(counter, file_ext)
-    os.path.split(filename)
-    response = requests.get(url)
-    response.raise_for_status()
-    Path(os.path.split(filename)[0]).mkdir(parents=True, exist_ok=True)
-    with open(filename, "wb") as file:
-        file.write(response.content)
-
-
-def nasa_image(nasa_token):
+def get_nasa(nasa_token):
     response = requests.get(
         f"https://api.nasa.gov/planetary/apod/", params={
             "api_key": nasa_token, "count": 50
@@ -41,7 +19,7 @@ def nasa_image(nasa_token):
             save_image(url, filename)
 
 
-def requst_epic(nasa_token):
+def get_epic(nasa_token):
     filename = "images/epic{}{}"
     response = requests.get(
         "https://api.nasa.gov/EPIC/api/natural/", params={"api_key": nasa_token}
@@ -62,8 +40,8 @@ def requst_epic(nasa_token):
 def main():
     dotenv.load_dotenv()
     nasa_token = os.getenv('NASA_TOKEN')
-    nasa_image(nasa_token)
-    requst_epic(nasa_token)
+    get_nasa(nasa_token)
+    get_epic(nasa_token)
 
 
 if __name__ == "__main__":

@@ -2,34 +2,36 @@ import telegram
 from pathlib import Path
 from os import listdir
 import os.path
-from urllib.parse import urlparse
 import dotenv
 import time
 import argparse
 from telegram.ext import defaults
 
 
-def set_time():
+def set_delay():
     pause = argparse.ArgumentParser()
     pause.add_argument('-t', '--time', type=int, default=86400)
     return pause
 
 
-def bot_send_list_photo(bot, user_time):
+def send_list_photo(bot, user_time, my_chat):
     for image in listdir('images'):
-        bot.send_photo(chat_id='@antonspacetest', photo=open('images/'+image, "rb"))
-        time.sleep(user_time)
-    print(listdir('images'))
+        with open('images/{}'.format(image), 'rb') as f:
+            bot.send_photo(chat_id=my_chat, photo=f)
+            time.sleep(user_time)
 
 
 def main():
-    pause = set_time()
+    # if not os.path.exists('images'):
+    #     os.makedirs('images')
+    pause = set_delay()
     namespace = pause.parse_args()
     user_time = namespace.time
     dotenv.load_dotenv()
     tg_token = os.getenv('TG_TOKEN')
+    my_chat = os.getenv('MY_CHAT')
     bot = telegram.Bot(token = tg_token)
-    bot_send_list_photo(bot, user_time)
+    send_list_photo(bot, user_time, my_chat)
 
 
 if __name__ == "__main__":
