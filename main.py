@@ -22,8 +22,8 @@ def send_list_photo(bot, user_time, my_chat):
 
 
 def main():
-    # if not os.path.exists('images'):
-    #     os.makedirs('images')
+    if not os.path.exists('images'):
+        os.makedirs('images')
     pause = set_delay()
     namespace = pause.parse_args()
     user_time = namespace.time

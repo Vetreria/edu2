@@ -6,6 +6,7 @@ import os.path
 
 
 def get_nasa(nasa_token):
+    links_img = []
     response = requests.get(
         f"https://api.nasa.gov/planetary/apod/", params={
             "api_key": nasa_token, "count": 50
@@ -14,12 +15,15 @@ def get_nasa(nasa_token):
     response.raise_for_status()
     filename = "images/nasa{}{}"
     for link in response.json():
+    
         url = link.get("hdurl")
         if url is not None:
-            save_image(url, filename)
+            links_img.append(url)
+    save_image(links_img, filename)
 
 
 def get_epic(nasa_token):
+    links_img = []
     filename = "images/epic{}{}"
     response = requests.get(
         "https://api.nasa.gov/EPIC/api/natural/", params={"api_key": nasa_token}
@@ -34,7 +38,8 @@ def get_epic(nasa_token):
                 """https://epic.gsfc.nasa.gov/archive/natural/{}/{}/{}/png/{}.png"""
                 .format(d_img.year, d_img.month, d_img.day, name)
             )
-            save_image(url, filename)
+            links_img.append(url)
+    save_image(links_img, filename)
 
 
 def main():
