@@ -1,9 +1,6 @@
-from os import listdir
 import os.path
-import hashlib
 import os
 from urllib.parse import urlparse
-from pathlib import Path
 import requests
 
 

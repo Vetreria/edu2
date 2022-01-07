@@ -1,11 +1,9 @@
 import telegram
-from pathlib import Path
 from os import listdir
 import os.path
 import dotenv
 import time
 import argparse
-from telegram.ext import defaults
 
 
 def parse_time():
