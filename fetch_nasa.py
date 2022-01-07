@@ -24,7 +24,7 @@ def get_nasa(nasa_token):
 
 
 def get_epic(nasa_token):
-    links_img = []
+    image_links = []
     filename = "images/epic{}{}"
     response = requests.get(
         "https://api.nasa.gov/EPIC/api/natural/", params={"api_key": nasa_token}
@@ -39,8 +39,8 @@ def get_epic(nasa_token):
                 """https://epic.gsfc.nasa.gov/archive/natural/{}/{}/{}/png/{}.png"""
                 .format(date_img.year, date_img.month, date_img.day, name)
             )
-            links_img.append(url)
-    save_image(links_img, filename)
+            image_links.append(url)
+    save_image(image_links, filename)
 
 
 def main():

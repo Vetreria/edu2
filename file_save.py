@@ -9,8 +9,8 @@ def get_file_ext(url):
     return os.path.splitext(cut.path)[-1]
 
 
-def save_image(links_img, filename):
-    for number, link in enumerate(links_img, 1):
+def save_image(image_links, filename):
+    for number, link in enumerate(image_links, 1):
         response = requests.get(link)
         response.raise_for_status()
         file_ext = get_file_ext(link)
