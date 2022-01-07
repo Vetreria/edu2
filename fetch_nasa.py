@@ -1,3 +1,4 @@
+from pathlib import Path
 import requests
 import datetime
 import dotenv
@@ -43,6 +44,7 @@ def get_epic(nasa_token):
 
 
 def main():
+    Path("images").mkdir(parents=True, exist_ok=True)
     dotenv.load_dotenv()
     nasa_token = os.getenv('NASA_TOKEN')
     get_nasa(nasa_token)

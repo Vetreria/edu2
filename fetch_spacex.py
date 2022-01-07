@@ -1,3 +1,4 @@
+from pathlib import Path
 import requests
 from file_save import save_image
 
@@ -11,6 +12,7 @@ def get_launch():
 
 
 def main():
+    Path("images").mkdir(parents=True, exist_ok=True)
     get_launch()
 
 

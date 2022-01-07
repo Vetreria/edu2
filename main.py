@@ -20,8 +20,6 @@ def send_list_photo(bot, user_time, tg_chat):
 
 
 def main():
-    if not os.path.exists("images"):
-        os.makedirs("images")
     pause = parse_time()
     namespace = pause.parse_args()
     user_time = namespace.time
