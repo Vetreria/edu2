@@ -12,10 +12,10 @@ def parse_time():
     return pause
 
 
-def send_list_photo(bot, user_time, my_chat):
+def send_list_photo(bot, user_time, tg_chat):
     for image in listdir('images'):
         with open('images/{}'.format(image), 'rb') as f:
-            bot.send_photo(chat_id=my_chat, photo=f)
+            bot.send_photo(chat_id=tg_chat, photo=f)
             time.sleep(user_time)
 
 
@@ -27,9 +27,9 @@ def main():
     user_time = namespace.time
     dotenv.load_dotenv()
     tg_token = os.getenv('TG_TOKEN')
-    my_chat = os.getenv('MY_CHAT')
+    tg_chat = os.getenv('TG_CHAT')
     bot = telegram.Bot(token = tg_token)
-    send_list_photo(bot, user_time, my_chat)
+    send_list_photo(bot, user_time, tg_chat)
 
 
 if __name__ == "__main__":
