@@ -7,9 +7,9 @@ import argparse
 
 
 def parse_time():
-    pause = argparse.ArgumentParser()
-    pause.add_argument("-t", "--time", type=int, default=86400)
-    return pause
+    scheduler_time = argparse.ArgumentParser()
+    scheduler_time.add_argument("-t", "--time", type=int, default=86400)
+    return scheduler_time
 
 
 def send_list_photo(bot, user_time, tg_chat):

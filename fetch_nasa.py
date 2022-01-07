@@ -31,12 +31,12 @@ def get_epic(nasa_token):
     response.raise_for_status()
     for param in response.json():
         name = param.get("image")
-        d_str = param.get("date")
-        d_img = datetime.datetime.strptime(d_str, "%Y-%m-%d %H:%M:%S")
-        if name or d_img is not None:
+        date_str = param.get("date")
+        date_img = datetime.datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+        if name or date_img is not None:
             url = (
                 """https://epic.gsfc.nasa.gov/archive/natural/{}/{}/{}/png/{}.png"""
-                .format(d_img.year, d_img.month, d_img.day, name)
+                .format(date_img.year, date_img.month, date_img.day, name)
             )
             links_img.append(url)
     save_image(links_img, filename)
