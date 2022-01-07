@@ -8,7 +8,7 @@ import argparse
 from telegram.ext import defaults
 
 
-def set_delay():
+def parse_time():
     pause = argparse.ArgumentParser()
     pause.add_argument('-t', '--time', type=int, default=86400)
     return pause
@@ -24,7 +24,7 @@ def send_list_photo(bot, user_time, my_chat):
 def main():
     if not os.path.exists('images'):
         os.makedirs('images')
-    pause = set_delay()
+    pause = parse_time()
     namespace = pause.parse_args()
     user_time = namespace.time
     dotenv.load_dotenv()
