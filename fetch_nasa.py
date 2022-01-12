@@ -9,7 +9,7 @@ import os.path
 def get_nasa(nasa_token):
     image_links = []
     response = requests.get(
-        f"https://api.nasa.gov/planetary/apod/", params={
+        "https://api.nasa.gov/planetary/apod/", params={
             "api_key": nasa_token, "count": 50
             }
     )
