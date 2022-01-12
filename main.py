@@ -16,7 +16,7 @@ def send_list_photo(bot, user_time, tg_chat):
     for image in listdir("images"):
         with open("images/{}".format(image), "rb") as f:
             bot.send_photo(chat_id=tg_chat, photo=f)
-            time.sleep(user_time)
+        time.sleep(user_time)
 
 
 def main():
