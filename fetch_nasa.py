@@ -39,7 +39,7 @@ def get_epic(nasa_token):
         date_img = datetime.datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
         if name or date_img:
             url = (
-                """https://epic.gsfc.nasa.gov/archive/natural/{}/{}/{}/png/{}.png"""
+                "https://epic.gsfc.nasa.gov/archive/natural/{}/{}/{}/png/{}.png"
                 .format(date_img.year, date_img.month, date_img.day, name)
             )
             image_links.append(url)
