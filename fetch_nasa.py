@@ -32,10 +32,8 @@ def get_epic(nasa_token):
         "http://api.nasa.gov/EPIC/api/natural/", params={"api_key": nasa_token}
     )
     response.raise_for_status()
-    print(response.json())
     for param in response.json():
         name = param.get("image")
-        # date_value = param.get("date")
         date_value = datetime.datetime.strptime(param.get("date"), "%Y-%m-%d %H:%M:%S")
         if name or date_value:
             url = (
@@ -52,7 +50,7 @@ def main():
     dotenv.load_dotenv()
     nasa_token = os.getenv('NASA_TOKEN')
     get_nasa(nasa_token)
-    # get_epic(nasa_token)
+    get_epic(nasa_token)
 
 
 if __name__ == "__main__":
