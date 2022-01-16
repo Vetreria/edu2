@@ -2,7 +2,7 @@ from pathlib import Path
 import requests
 import datetime
 import dotenv
-from file_save import save_image
+from file_save import save_images
 import os.path
 
 
@@ -21,7 +21,7 @@ def get_nasa(nasa_token):
         url = link.get("hdurl")
         if url:
             image_links.append(url)
-    save_image(image_links, filename)
+    save_images(image_links, filename)
 
 
 
@@ -35,15 +35,15 @@ def get_epic(nasa_token):
     print(response.json())
     for param in response.json():
         name = param.get("image")
-        date_str = param.get("date")
-        date_img = datetime.datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
-        if name or date_img:
+        # date_value = param.get("date")
+        date_value = datetime.datetime.strptime(param.get("date"), "%Y-%m-%d %H:%M:%S")
+        if name or date_value:
             url = (
                 "https://epic.gsfc.nasa.gov/archive/natural/{}/{}/{}/png/{}.png"
-                .format(date_img.year, date_img.month, date_img.day, name)
+                .format(date_value.year, date_value.month, date_value.day, name)
             )
             image_links.append(url)
-    save_image(image_links, filename)
+    save_images(image_links, filename)
     
 
 
@@ -52,7 +52,7 @@ def main():
     dotenv.load_dotenv()
     nasa_token = os.getenv('NASA_TOKEN')
     get_nasa(nasa_token)
-    get_epic(nasa_token)
+    # get_epic(nasa_token)
 
 
 if __name__ == "__main__":
