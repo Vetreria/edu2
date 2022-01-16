@@ -6,10 +6,10 @@ import time
 import argparse
 
 
-def parse_time():
-    scheduler_time = argparse.ArgumentParser()
-    scheduler_time.add_argument("-t", "--time", type=int, default=86400)
-    return scheduler_time
+def posting_delay():
+    delay_time = argparse.ArgumentParser()
+    delay_time.add_argument("-t", "--time", type=int, default=86400)
+    return delay_time
 
 
 def send_list_photo(bot, user_time, tg_chat):
@@ -20,7 +20,7 @@ def send_list_photo(bot, user_time, tg_chat):
 
 
 def main():
-    pause = parse_time()
+    pause = posting_delay()
     namespace = pause.parse_args()
     user_time = namespace.time
     dotenv.load_dotenv()
