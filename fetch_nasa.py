@@ -9,12 +9,11 @@ import os.path
 def get_nasa(nasa_token):
     image_links = []
     response = requests.get(
-        "https://api.nasa.gov/planetary/apod/", params={
+        "https://api.nasa.gov/planetary/apod", params={
             "api_key": nasa_token, "count": 50
             }
     )
     response.raise_for_status()
-    print(response.json)
     filename = "images/nasa{}{}"
     for link in response.json():
     
@@ -24,25 +23,23 @@ def get_nasa(nasa_token):
     save_images(image_links, filename)
 
 
-
 def get_epic(nasa_token):
     image_links = []
     filename = "images/epic{}{}"
     response = requests.get(
-        "http://api.nasa.gov/EPIC/api/natural/", params={"api_key": nasa_token}
+        "https://api.nasa.gov/EPIC/api/natural/", params={"api_key": nasa_token}
     )
     response.raise_for_status()
     for param in response.json():
         name = param.get("image")
         date_value = datetime.datetime.strptime(param.get("date"), "%Y-%m-%d %H:%M:%S")
-        if name or date_value:
+        if name and date_value:
             url = (
                 "https://epic.gsfc.nasa.gov/archive/natural/{}/{}/{}/png/{}.png"
-                .format(date_value.year, date_value.month, date_value.day, name)
+                .format(date_value.year, date_value.strftime("%m"), date_value.strftime("%d"), name)
             )
             image_links.append(url)
     save_images(image_links, filename)
-    
 
 
 def main():
