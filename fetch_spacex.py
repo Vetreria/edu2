@@ -1,6 +1,6 @@
 from pathlib import Path
 import requests
-from file_save import save_image
+from file_save import save_image, save_images
 
 
 def get_launch():
@@ -8,7 +8,7 @@ def get_launch():
     response.raise_for_status()
     image_links = response.json()['links']['flickr_images']
     filename = "images/spacex{}{}"
-    save_image(image_links, filename)
+    save_images(image_links, filename)
 
 
 def main():

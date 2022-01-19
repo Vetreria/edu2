@@ -9,7 +9,7 @@ def get_file_ext(url):
     return os.path.splitext(cut.path)[-1]
 
 
-def save_image(image_links, filename):
+def save_images(image_links, filename):
     for number, link in enumerate(image_links, 1):
         response = requests.get(link)
         response.raise_for_status()
