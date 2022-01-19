@@ -6,7 +6,7 @@ import time
 import argparse
 
 
-def posting_delay():
+def return_parser():
     delay_time = argparse.ArgumentParser()
     delay_time.add_argument("-t", "--time", type=int, default=86400)
     return delay_time
@@ -20,7 +20,7 @@ def send_list_photo(bot, user_time, tg_chat):
 
 
 def main():
-    pause = posting_delay()
+    pause = return_parser()
     namespace = pause.parse_args()
     user_time = namespace.time
     dotenv.load_dotenv()
