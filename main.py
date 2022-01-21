@@ -1,3 +1,4 @@
+from email import parser
 import telegram
 from os import listdir
 import os.path
@@ -20,8 +21,8 @@ def send_list_photo(bot, user_time, tg_chat):
 
 
 def main():
-    pause = return_parser()
-    namespace = pause.parse_args()
+    parser = return_parser()
+    namespace = parser.parse_args()
     user_time = namespace.time
     dotenv.load_dotenv()
     tg_token = os.getenv("TG_TOKEN")
