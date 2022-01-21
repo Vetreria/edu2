@@ -7,9 +7,9 @@ import argparse
 
 
 def return_parser():
-    delay_time = argparse.ArgumentParser()
-    delay_time.add_argument("-t", "--time", type=int, default=86400)
-    return delay_time
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-t", "--time", type=int, default=86400)
+    return parser
 
 
 def send_list_photo(bot, user_time, tg_chat):
